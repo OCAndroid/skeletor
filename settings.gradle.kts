@@ -1,2 +1,2 @@
 rootProject.buildFileName = "build.gradle.kts"
-include(":koleton-base", "koleton-singleton", ":koleton-sample")
+include(":skeletor-base", "skeletor-singleton", ":skeletor-sample")

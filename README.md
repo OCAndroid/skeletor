@@ -1,38 +1,24 @@
-# Koleton
+# Skeletor
 
-> The easiest library to show skeleton screens in an Android app.
+> Generate skeleton screens in an Android app.
 
-<a href="https://github.com/ericktijerou/koleton/actions"><img src="https://github.com/ericktijerou/koleton/workflows/Build%20and%20test/badge.svg" /></a>
-<a href="https://github.com/ericktijerou/koleton/releases"><img src="https://img.shields.io/github/v/release/ericktijerou/koleton" /></a>
+Note: This is a fork of [https://github.com/ericktijerou/koleton](ericktijerou/koleton).
+The library was forked at: `v1.0.0-beta01`
+
+<a href="https://github.com/OCAndroid/skeletor/actions"><img src="https://github.com/OCAndroid/skeletor/workflows/Build%20and%20test/badge.svg" /></a>
+<a href="https://github.com/OCAndroid/skeletor/releases"><img src="https://img.shields.io/github/v/release/OCAndroid/skeletor" /></a>
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.5.10-blueviolet.svg)](https://kotlinlang.org)
 ![Minimum SDK Version](https://img.shields.io/badge/minSdkVersion-14-brightgreen.svg)
 
 An Android library that provides an easy way to show skeleton of any view.
-
-Koleton is an acronym for: **Ko**tlin ske**leton**.
-
-Made with ❤ by [ericktijerou](https://ericktijerou.com).
 
 ![img](image/journey_list.gif)
 ![img](image/paging.gif)
 ![img](image/journey_detail.gif)
 
 ## Installation
-You can [download](https://bintray.com/ericktijerou/maven/koleton/_latestVersion) and install `Koleton` with `Maven Central` and `Gradle`:
 
-```gradle
-// In your module's `build.gradle.kts`
-dependencies {
-    implementation("com.ericktijerou.koleton:koleton:1.0.0-beta01")
-}
-```
-
-Make sure to include `mavenCentral()` in your repositories
-```gradle
-repositories {
-  mavenCentral()
-}
-```
+TODO: Publish via Jitpack
 
 ## Quick Start
 To load the skeleton of a `View`, use the `loadSkeleton` extension function:
@@ -164,7 +150,7 @@ You can find more information about Facebook's shimmer effect on the [shimmer-an
 
 ## License
 
-       Copyright 2020 ericktijerou
+       Copyright 2020-2021 ericktijerou, Bladymir Tellez<btellez@gmail.com>
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.

@@ -57,15 +57,15 @@ object Release {
 }
 
 object Developer {
-    const val id = "ericktijerou"
-    const val fullName = "Erick Tijero"
+    const val id = "blad"
+    const val fullName = "Bladymir Tellez"
 }
 
-object Koleton {
-    const val name = "koleton"
+object Skeletor {
+    const val name = "Skeletor"
     const val repository = "maven"
     const val description = "The easiest library to show skeleton screens in an Android app."
     const val licenseName = "Apache-2.0"
     const val licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0.txt"
-    const val mainModule = "koleton-singleton"
+    const val mainModule = "skeletor-singleton"
 }

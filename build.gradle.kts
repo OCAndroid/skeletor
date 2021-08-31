@@ -1,5 +1,5 @@
 import com.android.build.gradle.BaseExtension
-import koleton.*
+import skeletor.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -34,8 +34,8 @@ allprojects {
 
 apply(from ="${rootDir}/scripts/publish-root.gradle")
 
-val androidModules = listOf("koleton-singleton", "koleton-base")
-val androidSampleModules = listOf("koleton-sample")
+val androidModules = listOf("skeletor-singleton", "skeletor-base")
+val androidSampleModules = listOf("skeletor-sample")
 
 subprojects {
 
@@ -116,7 +116,7 @@ subprojects {
         if (!isSample) {
             version = project.publishVersion
             group = project.groupId
-            val artifactName = if (project.name == Koleton.mainModule) Koleton.name else project.name
+            val artifactName = if (project.name == Skeletor.mainModule) Skeletor.name else project.name
 
             apply {
                 plugin(Release.MavenPublish.plugin)

@@ -50,12 +50,12 @@ afterEvaluate {
 
                 pom {
                     name = PUBLISH_ARTIFACT_ID
-                    description = Koleton.description
+                    description = Skeletor.description
                     url = project.vcsUrl
                     licenses {
                         license {
-                            name = Koleton.licenseName
-                            url = Koleton.licenseUrl
+                            name = Skeletor.licenseName
+                            url = Skeletor.licenseUrl
                         }
                     }
                     developers {
@@ -65,9 +65,9 @@ afterEvaluate {
                         }
                     }
                     scm {
-                        connection = 'scm:git:github.com/ericktijerou/koleton.git'
-                        developerConnection = 'scm:git:ssh://github.com/ericktijerou/koleton.git'
-                        url = 'https://github.com/ericktijerou/koleton/tree/main'
+                        connection = 'scm:git:github.com/ocandroid/skeletor.git'
+                        developerConnection = 'scm:git:ssh://github.com/ocandroid/skeletor.git'
+                        url = 'https://github.com/ocandroid/skeletor/tree/main'
                     }
                 }
             }
