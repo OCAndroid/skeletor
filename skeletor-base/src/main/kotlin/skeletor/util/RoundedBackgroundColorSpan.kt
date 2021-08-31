@@ -1,9 +1,6 @@
 package skeletor.util
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.RectF
+import android.graphics.*
 import android.text.style.LineBackgroundSpan
 import androidx.annotation.ColorInt
 import kotlin.math.roundToInt
@@ -11,7 +8,8 @@ import kotlin.math.roundToInt
 internal class RoundedBackgroundColorSpan(
     @ColorInt private val color: Int,
     private val cornerRadius: Float,
-    private val lineSpacingPerLine: Float
+    private val lineSpacingPerLine: Float,
+    private val inverse: Boolean
 ) : LineBackgroundSpan {
 
     private val rect = Rect()
@@ -30,7 +28,13 @@ internal class RoundedBackgroundColorSpan(
         lineNumber: Int
     ) {
         val paintColor = paint.color
+        val xfermode = paint.xfermode
+
         paint.color = color
+        if (inverse) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        }
+
         val width = paint.measureText(text, start, end).roundToInt()
         val rightWrapping = left + width
         rect.set(
@@ -41,6 +45,8 @@ internal class RoundedBackgroundColorSpan(
         )
         paint.isAntiAlias = cornerRadius > NUMBER_ZERO
         canvas.drawRoundRect(RectF(rect), cornerRadius, cornerRadius, paint)
+
         paint.color = paintColor
+        paint.xfermode = xfermode
     }
 }
