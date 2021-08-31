@@ -79,9 +79,7 @@ class JourneyListFragment : Fragment() {
     private fun onLoadInitial() {
         binding.apply {
             ivRefresh.gone()
-            rvUsers.loadSkeleton(R.layout.item_journey) {
-               invert(true)
-            }
+            rvUsers.loadSkeleton(R.layout.item_journey)
             tvSubtitle.loadSkeleton(length = 20)
         }
     }
