@@ -26,7 +26,7 @@ sealed class Attributes {
     abstract val shimmer: Shimmer
     abstract val lineSpacing: Float
     open val invert: Boolean = false
-    abstract val attributesSelector: (View) -> Attributes
+    abstract val attributesSelector: (View, Attributes) -> Attributes
 }
 
 data class RecyclerViewAttributes(
@@ -39,10 +39,10 @@ data class RecyclerViewAttributes(
     @LayoutRes val itemLayout: Int,
     val itemCount: Int,
     override val invert: Boolean = false,
-    private val attributesForView: ((View) -> Attributes)?
+    private val attributesForView: ((View, Attributes) -> Attributes)? = null
 ) : Attributes() {
-    override val attributesSelector: (View) -> Attributes
-        get() = attributesForView ?: { this }
+    override val attributesSelector: (View, Attributes) -> Attributes
+        get() = { view, attr -> attributesForView?.invoke(view, attr) ?: this }
 }
 
 data class SimpleViewAttributes(
@@ -52,10 +52,10 @@ data class SimpleViewAttributes(
     override val shimmer: Shimmer,
     override val lineSpacing: Float,
     override val invert: Boolean = false,
-    private val attributesForView: ((View) -> Attributes)?
+    private val attributesForView: ((View, Attributes) -> Attributes)? = null
 ) : Attributes() {
-    override val attributesSelector: (View) -> Attributes
-        get() = attributesForView ?: { this }
+    override val attributesSelector: (View, Attributes) -> Attributes
+        get() = { view, attr-> attributesForView?.invoke(view, attr) ?: this }
 }
 
 data class TextViewAttributes(
@@ -67,8 +67,8 @@ data class TextViewAttributes(
     override val lineSpacing: Float,
     val length: Int,
     override val invert: Boolean = false,
-    private val attributesForView: ((View) -> Attributes)?
+    private val attributesForView: ((View, Attributes) -> Attributes)? = null
 ) : Attributes() {
-    override val attributesSelector: (View) -> Attributes
-        get() = attributesForView ?: { this }
+    override val attributesSelector: (View, Attributes) -> Attributes
+        get() = { view, attr-> attributesForView?.invoke(view, attr) ?: this }
 }

@@ -5,7 +5,10 @@ package skeletor.skeleton
 import android.content.Context
 import android.view.View
 import android.widget.TextView
-import androidx.annotation.*
+import androidx.annotation.ColorInt
+import androidx.annotation.LayoutRes
+import androidx.annotation.MainThread
+import androidx.annotation.Px
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.Shimmer
@@ -18,7 +21,7 @@ import skeletor.target.TextViewTarget
 /**
  * The base class for a skeleton view.
  *
- * There are two types of skeleton views: [ViewSkeleton]s and [RecyclerViewSkeleton]s.
+ * The are types of skeleton views are: [ViewSkeleton]s, [RecyclerViewSkeleton]s, and [TextViewSkeleton]s.
  */
 sealed class Skeleton {
 
@@ -30,6 +33,7 @@ sealed class Skeleton {
     abstract val lifecycle: Lifecycle?
     abstract val shimmer: Shimmer?
     abstract val lineSpacing: Float?
+    abstract val invert: Boolean?
 
     /**
      * A set of callbacks for a [Skeleton].
@@ -74,7 +78,8 @@ class ViewSkeleton internal constructor(
     @Px override val cornerRadius: Float?,
     override val isShimmerEnabled: Boolean?,
     override val shimmer: Shimmer?,
-    override val lineSpacing: Float?
+    override val lineSpacing: Float?,
+    override val invert: Boolean?
 ) : Skeleton() {
 
     /** Create a new [Builder] instance using this as a base. */
@@ -140,7 +145,8 @@ class ViewSkeleton internal constructor(
                 cornerRadius,
                 isShimmerEnabled,
                 shimmer,
-                lineSpacing
+                lineSpacing,
+                invert
             )
         }
     }
@@ -156,7 +162,8 @@ class RecyclerViewSkeleton internal constructor(
     @LayoutRes internal val itemLayoutResId: Int,
     internal val itemCount: Int?,
     override val shimmer: Shimmer?,
-    override val lineSpacing: Float?
+    override val lineSpacing: Float?,
+    override val invert: Boolean?
 ) : Skeleton() {
 
     /** Create a new [Builder] instance using this as a base. */
@@ -167,6 +174,7 @@ class RecyclerViewSkeleton internal constructor(
 
         private var target: Target?
         private var lifecycle: Lifecycle?
+
         @LayoutRes
         private var itemLayoutResId: Int
         private var itemCount: Int?
@@ -238,7 +246,8 @@ class RecyclerViewSkeleton internal constructor(
                 itemLayoutResId,
                 itemCount,
                 shimmer,
-                lineSpacing
+                lineSpacing,
+                invert
             )
         }
     }
@@ -253,7 +262,8 @@ class TextViewSkeleton internal constructor(
     override val isShimmerEnabled: Boolean?,
     override val shimmer: Shimmer?,
     override val lineSpacing: Float?,
-    internal val length: Int
+    internal val length: Int,
+    override val invert: Boolean?
 ) : Skeleton() {
 
     /** Create a new [Builder] instance using this as a base. */
@@ -274,8 +284,8 @@ class TextViewSkeleton internal constructor(
 
         @JvmOverloads
         constructor(
-                skeleton: TextViewSkeleton,
-                context: Context = skeleton.context
+            skeleton: TextViewSkeleton,
+            context: Context = skeleton.context
         ) : super(skeleton, context) {
             target = skeleton.target
             lifecycle = skeleton.lifecycle
@@ -293,9 +303,9 @@ class TextViewSkeleton internal constructor(
          * Convenience function to create and set the [Target].
          */
         inline fun target(
-                crossinline onStart: () -> Unit = {},
-                crossinline onError: () -> Unit = {},
-                crossinline onSuccess: (skeleton: SkeletorView) -> Unit = {}
+            crossinline onStart: () -> Unit = {},
+            crossinline onError: () -> Unit = {},
+            crossinline onSuccess: (skeleton: SkeletorView) -> Unit = {}
         ) = target(object : Target {
             override fun onStart() = onStart()
             override fun onError() = onError()
@@ -315,15 +325,16 @@ class TextViewSkeleton internal constructor(
          */
         fun build(): TextViewSkeleton {
             return TextViewSkeleton(
-                    context,
-                    target,
-                    lifecycle,
-                    color,
-                    cornerRadius,
-                    isShimmerEnabled,
-                    shimmer,
-                    lineSpacing,
-                    length
+                context,
+                target,
+                lifecycle,
+                color,
+                cornerRadius,
+                isShimmerEnabled,
+                shimmer,
+                lineSpacing,
+                length,
+                invert
             )
         }
     }

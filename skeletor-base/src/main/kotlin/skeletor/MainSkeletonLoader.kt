@@ -105,7 +105,8 @@ internal class MainSkeletonLoader(
                     isShimmerEnabled = isShimmerEnabled ?: defaults.isShimmerEnabled,
                     shimmer = shimmer ?: defaults.shimmer,
                     lineSpacing = lineSpacing ?: defaults.lineSpacing,
-                    length = length
+                    length = length,
+                    invert = invert ?: defaults.invert
             )
             target.view.generateTextSkeletorView(attributes)
         } else {
@@ -123,7 +124,8 @@ internal class MainSkeletonLoader(
                 shimmer = shimmer ?: defaults.shimmer,
                 lineSpacing = lineSpacing ?: defaults.lineSpacing,
                 itemLayout = itemLayoutResId,
-                itemCount = itemCount ?: defaults.itemCount
+                itemCount = itemCount ?: defaults.itemCount,
+                invert = invert ?: defaults.invert
             )
             target.view.generateRecyclerSkeletorView(attributes)
         } else {
@@ -138,7 +140,8 @@ internal class MainSkeletonLoader(
                 cornerRadius = cornerRadius ?: defaults.cornerRadius,
                 isShimmerEnabled = isShimmerEnabled ?: defaults.isShimmerEnabled,
                 shimmer = shimmer ?: defaults.shimmer,
-                lineSpacing = lineSpacing ?: defaults.lineSpacing
+                lineSpacing = lineSpacing ?: defaults.lineSpacing,
+                invert = invert ?: defaults.invert
             )
             target.view.generateSimpleSkeletorView(attributes)
         } else {

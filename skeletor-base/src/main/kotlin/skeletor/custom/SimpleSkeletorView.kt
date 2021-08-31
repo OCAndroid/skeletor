@@ -75,7 +75,7 @@ internal class SimpleSkeletorView @JvmOverloads constructor(
                 } else {
                     setShimmer(attrs.shimmer)
                 }
-                skeletorMask = SkeletorMask(this, attrs.color, attrs.cornerRadius, attrs.lineSpacing)
+                skeletorMask = SkeletorMask(this, attrs)
             }
         }
     }

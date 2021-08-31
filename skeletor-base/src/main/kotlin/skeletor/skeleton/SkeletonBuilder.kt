@@ -19,6 +19,7 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
     @JvmField protected var isShimmerEnabled: Boolean?
     @JvmField protected var shimmer: Shimmer?
     @JvmField @Px protected var lineSpacing: Float?
+    @JvmField protected var invert: Boolean?
 
     constructor(context: Context) {
         this.context = context
@@ -27,6 +28,7 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
         this.isShimmerEnabled = null
         this.shimmer = null
         this.lineSpacing = null
+        this.invert = null
     }
 
     constructor(skeleton: Skeleton, context: Context) {
@@ -36,6 +38,7 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
         this.isShimmerEnabled = skeleton.isShimmerEnabled
         this.shimmer = skeleton.shimmer
         this.lineSpacing = skeleton.lineSpacing
+        this.invert = skeleton.invert
     }
 
     /**
@@ -57,6 +60,13 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
      */
     fun color(@ColorRes colorRes: Int): T = self {
         colorInt(context.getColorCompat(colorRes))
+    }
+
+    /**
+     * Invert the skeleton's color.
+     */
+    fun invert(enable: Boolean): T = self {
+        this.invert = enable
     }
 
     /**

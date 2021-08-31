@@ -92,7 +92,7 @@ internal class TextSkeletorView @JvmOverloads constructor(
                 } else {
                     setShimmer(attrs.shimmer)
                 }
-                skeletorMask = SkeletorMask(this, attrs.color, attrs.cornerRadius, attrs.lineSpacing)
+                skeletorMask = SkeletorMask(this, attrs)
             }
         }
     }

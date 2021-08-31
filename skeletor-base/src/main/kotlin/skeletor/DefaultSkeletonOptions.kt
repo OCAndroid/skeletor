@@ -17,7 +17,8 @@ data class DefaultSkeletonOptions(
     val isShimmerEnabled: Boolean = true,
     val itemCount: Int = ITEM_COUNT,
     val lineSpacing: Float = LINE_SPACING.px,
-    val shimmer: Shimmer = getDefaultShimmer()
+    val shimmer: Shimmer = getDefaultShimmer(),
+    val invert: Boolean = false
 ) {
     companion object {
         private const val CORNER_RADIUS = 8
