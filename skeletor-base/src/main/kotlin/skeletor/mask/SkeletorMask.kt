@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.graphics.toRectF
 import skeletor.custom.Attributes
 import skeletor.util.*
 import kotlin.math.absoluteValue
@@ -37,7 +38,7 @@ internal class SkeletorMask(
             xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
             isAntiAlias = attr.cornerRadius > NUMBER_ZERO
         }
-        mask(view, view as ViewGroup, paint, false)
+        mask(view, view as ViewGroup, paint, attr.invert)
     }
 
     fun draw(canvas: Canvas) {
@@ -48,35 +49,43 @@ internal class SkeletorMask(
         val viewAttributes = attr.attributesSelector(view, attr)
         when (view) {
             is ViewGroup -> {
-                if (viewAttributes.invert) {
-                    maskViewGroup(view, root, paint)
-                }
-                view.children().forEach { v -> mask(v, root, paint, viewAttributes.invert) }
+                maskViewGroup(view, root, paint, viewAttributes)
+                view.children().forEach { v -> mask(v, root, paint,  parentInverted && viewAttributes.invert) }
             }
-            is TextView -> maskTextView(view, root, parentInverted)
-            else -> maskView(view, root, paint, parentInverted)
+            is TextView -> {
+                maskTextView(view, root, parentInverted)
+            }
+            else -> {
+                maskView(view, root, paint, viewAttributes, parentInverted)
+            }
         }
     }
 
-    private fun maskViewGroup(view: View, root: ViewGroup, paint: Paint) {
+    private fun maskViewGroup(view: View, root: ViewGroup, paint: Paint, viewAttributes: Attributes) {
         val rect = Rect().also {
             view.getDrawingRect(it)
             root.offsetDescendantRectToMyCoords(view, it)
         }
-        canvas.drawRoundRect(RectF(rect), attr.cornerRadius, attr.cornerRadius, paint)
+
+        val xfermode = paint.xfermode
+        if (!viewAttributes.invert) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        }
+        canvas.drawRoundRect(RectF(rect), viewAttributes.cornerRadius, viewAttributes.cornerRadius, paint)
+        paint.xfermode = xfermode
     }
 
-    private fun maskView(view: View, root: ViewGroup, paint: Paint, inverse: Boolean) {
+    private fun maskView(view: View, root: ViewGroup, paint: Paint, viewAttributes: Attributes, inverse: Boolean) {
         val rect = Rect().also {
             view.getDrawingRect(it)
             root.offsetDescendantRectToMyCoords(view, it)
-        }
+        }.toRectF()
 
         val cutoutPaint =
             if (inverse) Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
             else paint
 
-        canvas.drawRect(rect, cutoutPaint)
+        canvas.drawRoundRect(rect, viewAttributes.cornerRadius, viewAttributes.cornerRadius, cutoutPaint)
     }
 
     private fun maskTextView(

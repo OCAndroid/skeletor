@@ -29,6 +29,18 @@ sealed class Attributes {
     abstract val lineSpacing: Float
     open val invert: Boolean = false
     abstract val attributesSelector: AttributeSelector
+
+    fun updateInvert(value: Boolean): Attributes = when (this) {
+        is RecyclerViewAttributes -> this.copy(invert = value)
+        is TextViewAttributes -> this.copy(invert = value)
+        is SimpleViewAttributes -> this.copy(invert = value)
+    }
+
+    fun updateCornerRadius(value: Float): Attributes = when (this) {
+        is RecyclerViewAttributes -> this.copy(cornerRadius = value)
+        is TextViewAttributes -> this.copy(cornerRadius = value)
+        is SimpleViewAttributes -> this.copy(cornerRadius = value)
+    }
 }
 
 data class RecyclerViewAttributes(
@@ -57,7 +69,7 @@ data class SimpleViewAttributes(
     private val attributesForView: AttributeSelector? = null
 ) : Attributes() {
     override val attributesSelector: AttributeSelector
-        get() = { view, attr-> attributesForView?.invoke(view, attr) ?: this }
+        get() = { view, attr -> attributesForView?.invoke(view, attr) ?: this }
 }
 
 data class TextViewAttributes(
@@ -72,5 +84,5 @@ data class TextViewAttributes(
     private val attributesForView: AttributeSelector? = null
 ) : Attributes() {
     override val attributesSelector: AttributeSelector
-        get() = { view, attr-> attributesForView?.invoke(view, attr) ?: this }
+        get() = { view, attr -> attributesForView?.invoke(view, attr) ?: this }
 }
