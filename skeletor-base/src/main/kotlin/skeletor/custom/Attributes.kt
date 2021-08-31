@@ -8,6 +8,8 @@ import androidx.annotation.Px
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.Shimmer
 
+typealias AttributeSelector = (View, Attributes) -> Attributes
+
 /**
  * Attributes to be applied while generating the skeleton layout.
  *
@@ -26,7 +28,7 @@ sealed class Attributes {
     abstract val shimmer: Shimmer
     abstract val lineSpacing: Float
     open val invert: Boolean = false
-    abstract val attributesSelector: (View, Attributes) -> Attributes
+    abstract val attributesSelector: AttributeSelector
 }
 
 data class RecyclerViewAttributes(
@@ -39,9 +41,9 @@ data class RecyclerViewAttributes(
     @LayoutRes val itemLayout: Int,
     val itemCount: Int,
     override val invert: Boolean = false,
-    private val attributesForView: ((View, Attributes) -> Attributes)? = null
+    private val attributesForView: AttributeSelector? = null
 ) : Attributes() {
-    override val attributesSelector: (View, Attributes) -> Attributes
+    override val attributesSelector: AttributeSelector
         get() = { view, attr -> attributesForView?.invoke(view, attr) ?: this }
 }
 
@@ -52,9 +54,9 @@ data class SimpleViewAttributes(
     override val shimmer: Shimmer,
     override val lineSpacing: Float,
     override val invert: Boolean = false,
-    private val attributesForView: ((View, Attributes) -> Attributes)? = null
+    private val attributesForView: AttributeSelector? = null
 ) : Attributes() {
-    override val attributesSelector: (View, Attributes) -> Attributes
+    override val attributesSelector: AttributeSelector
         get() = { view, attr-> attributesForView?.invoke(view, attr) ?: this }
 }
 
@@ -67,8 +69,8 @@ data class TextViewAttributes(
     override val lineSpacing: Float,
     val length: Int,
     override val invert: Boolean = false,
-    private val attributesForView: ((View, Attributes) -> Attributes)? = null
+    private val attributesForView: AttributeSelector? = null
 ) : Attributes() {
-    override val attributesSelector: (View, Attributes) -> Attributes
+    override val attributesSelector: AttributeSelector
         get() = { view, attr-> attributesForView?.invoke(view, attr) ?: this }
 }

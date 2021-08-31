@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.LifecycleObserver
 import com.facebook.shimmer.ShimmerFrameLayout
+import kotlinx.coroutines.*
 import skeletor.annotation.ExperimentalSkeletorApi
 import skeletor.custom.*
 import skeletor.memory.DelegateService
@@ -18,7 +19,6 @@ import skeletor.target.SimpleViewTarget
 import skeletor.target.TextViewTarget
 import skeletor.target.ViewTarget
 import skeletor.util.*
-import kotlinx.coroutines.*
 
 @OptIn(ExperimentalSkeletorApi::class)
 internal class MainSkeletonLoader(
@@ -99,14 +99,15 @@ internal class MainSkeletonLoader(
     private fun generateTextView(skeleton: TextViewSkeleton) = with(skeleton) {
         return@with if (target is TextViewTarget) {
             val attributes = TextViewAttributes(
-                    view = target.view,
-                    color = color ?: defaults.color,
-                    cornerRadius = cornerRadius ?: defaults.cornerRadius,
-                    isShimmerEnabled = isShimmerEnabled ?: defaults.isShimmerEnabled,
-                    shimmer = shimmer ?: defaults.shimmer,
-                    lineSpacing = lineSpacing ?: defaults.lineSpacing,
-                    length = length,
-                    invert = invert ?: defaults.invert
+                view = target.view,
+                color = color ?: defaults.color,
+                cornerRadius = cornerRadius ?: defaults.cornerRadius,
+                isShimmerEnabled = isShimmerEnabled ?: defaults.isShimmerEnabled,
+                shimmer = shimmer ?: defaults.shimmer,
+                lineSpacing = lineSpacing ?: defaults.lineSpacing,
+                length = length,
+                invert = invert ?: defaults.invert,
+                attributesForView = attributeSelector
             )
             target.view.generateTextSkeletorView(attributes)
         } else {
@@ -125,7 +126,8 @@ internal class MainSkeletonLoader(
                 lineSpacing = lineSpacing ?: defaults.lineSpacing,
                 itemLayout = itemLayoutResId,
                 itemCount = itemCount ?: defaults.itemCount,
-                invert = invert ?: defaults.invert
+                invert = invert ?: defaults.invert,
+                attributesForView = attributeSelector
             )
             target.view.generateRecyclerSkeletorView(attributes)
         } else {
@@ -141,7 +143,8 @@ internal class MainSkeletonLoader(
                 isShimmerEnabled = isShimmerEnabled ?: defaults.isShimmerEnabled,
                 shimmer = shimmer ?: defaults.shimmer,
                 lineSpacing = lineSpacing ?: defaults.lineSpacing,
-                invert = invert ?: defaults.invert
+                invert = invert ?: defaults.invert,
+                attributesForView = attributeSelector
             )
             target.view.generateSimpleSkeletorView(attributes)
         } else {

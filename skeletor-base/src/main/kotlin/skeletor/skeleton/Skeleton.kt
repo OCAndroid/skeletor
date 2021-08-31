@@ -12,6 +12,7 @@ import androidx.annotation.Px
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.Shimmer
+import skeletor.custom.AttributeSelector
 import skeletor.custom.SkeletorView
 import skeletor.target.RecyclerViewTarget
 import skeletor.target.SimpleViewTarget
@@ -34,6 +35,7 @@ sealed class Skeleton {
     abstract val shimmer: Shimmer?
     abstract val lineSpacing: Float?
     abstract val invert: Boolean?
+    abstract val attributeSelector: AttributeSelector?
 
     /**
      * A set of callbacks for a [Skeleton].
@@ -79,7 +81,8 @@ class ViewSkeleton internal constructor(
     override val isShimmerEnabled: Boolean?,
     override val shimmer: Shimmer?,
     override val lineSpacing: Float?,
-    override val invert: Boolean?
+    override val invert: Boolean?,
+    override val attributeSelector: AttributeSelector?
 ) : Skeleton() {
 
     /** Create a new [Builder] instance using this as a base. */
@@ -146,7 +149,8 @@ class ViewSkeleton internal constructor(
                 isShimmerEnabled,
                 shimmer,
                 lineSpacing,
-                invert
+                invert,
+                attributeSelector
             )
         }
     }
@@ -163,7 +167,8 @@ class RecyclerViewSkeleton internal constructor(
     internal val itemCount: Int?,
     override val shimmer: Shimmer?,
     override val lineSpacing: Float?,
-    override val invert: Boolean?
+    override val invert: Boolean?,
+    override val attributeSelector: AttributeSelector?
 ) : Skeleton() {
 
     /** Create a new [Builder] instance using this as a base. */
@@ -247,7 +252,8 @@ class RecyclerViewSkeleton internal constructor(
                 itemCount,
                 shimmer,
                 lineSpacing,
-                invert
+                invert,
+                attributeSelector
             )
         }
     }
@@ -263,7 +269,8 @@ class TextViewSkeleton internal constructor(
     override val shimmer: Shimmer?,
     override val lineSpacing: Float?,
     internal val length: Int,
-    override val invert: Boolean?
+    override val invert: Boolean?,
+    override val attributeSelector: AttributeSelector?
 ) : Skeleton() {
 
     /** Create a new [Builder] instance using this as a base. */
@@ -334,7 +341,8 @@ class TextViewSkeleton internal constructor(
                 shimmer,
                 lineSpacing,
                 length,
-                invert
+                invert,
+                attributeSelector
             )
         }
     }

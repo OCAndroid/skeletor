@@ -4,6 +4,7 @@ import android.graphics.Color
 import androidx.annotation.ColorInt
 import com.facebook.shimmer.Shimmer
 import skeletor.base.R
+import skeletor.custom.AttributeSelector
 import skeletor.util.px
 
 /**
@@ -18,7 +19,8 @@ data class DefaultSkeletonOptions(
     val itemCount: Int = ITEM_COUNT,
     val lineSpacing: Float = LINE_SPACING.px,
     val shimmer: Shimmer = getDefaultShimmer(),
-    val invert: Boolean = false
+    val invert: Boolean = false,
+    val attributeSelector: AttributeSelector? = null
 ) {
     companion object {
         private const val CORNER_RADIUS = 8

@@ -6,6 +6,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.Px
 import com.facebook.shimmer.Shimmer
 import skeletor.annotation.BuilderMarker
+import skeletor.custom.AttributeSelector
 import skeletor.util.getColorCompat
 import skeletor.util.self
 
@@ -20,6 +21,8 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
     @JvmField protected var shimmer: Shimmer?
     @JvmField @Px protected var lineSpacing: Float?
     @JvmField protected var invert: Boolean?
+    @JvmField protected var attributeSelector: AttributeSelector?
+
 
     constructor(context: Context) {
         this.context = context
@@ -29,6 +32,7 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
         this.shimmer = null
         this.lineSpacing = null
         this.invert = null
+        this.attributeSelector = null
     }
 
     constructor(skeleton: Skeleton, context: Context) {
@@ -39,6 +43,14 @@ open class SkeletonBuilder<T : SkeletonBuilder<T>> {
         this.shimmer = skeleton.shimmer
         this.lineSpacing = skeleton.lineSpacing
         this.invert = skeleton.invert
+        this.attributeSelector = skeleton.attributeSelector
+    }
+
+    /**
+     * Set a custom attribute selector to customize attributes for specific child views.
+     */
+    fun attributeSelector(selector: AttributeSelector): T = self {
+        this.attributeSelector = selector
     }
 
     /**
