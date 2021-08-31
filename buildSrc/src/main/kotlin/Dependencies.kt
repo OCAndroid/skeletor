@@ -62,7 +62,7 @@ object Developer {
 }
 
 object Skeletor {
-    const val name = "Skeletor"
+    const val name = "skeletor"
     const val repository = "maven"
     const val description = "The easiest library to show skeleton screens in an Android app."
     const val licenseName = "Apache-2.0"
