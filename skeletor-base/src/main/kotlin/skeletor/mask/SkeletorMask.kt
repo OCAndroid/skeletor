@@ -38,25 +38,25 @@ internal class SkeletorMask(
             xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
             isAntiAlias = attr.cornerRadius > NUMBER_ZERO
         }
-        mask(view, view as ViewGroup, paint, attr.invert)
+        mask(view, view as ViewGroup, paint)
     }
 
     fun draw(canvas: Canvas) {
         canvas.drawBitmap(bitmap, 0f, 0f, paint)
     }
 
-    private fun mask(view: View, root: ViewGroup, paint: Paint, parentInverted: Boolean) {
+    private fun mask(view: View, root: ViewGroup, paint: Paint, parentInverted: Boolean? = null) {
         val viewAttributes = attr.attributesSelector(view, attr)
         when (view) {
             is ViewGroup -> {
                 maskViewGroup(view, root, paint, viewAttributes)
-                view.children().forEach { v -> mask(v, root, paint,  parentInverted && viewAttributes.invert) }
+                view.children().forEach { v -> mask(v, root, paint, viewAttributes.invert) }
             }
             is TextView -> {
-                maskTextView(view, root, parentInverted)
+                maskTextView(view, root, (parentInverted ?: false) || viewAttributes.invert)
             }
             else -> {
-                maskView(view, root, paint, viewAttributes, parentInverted)
+                maskView(view, root, paint, viewAttributes, (parentInverted ?: false) || viewAttributes.invert)
             }
         }
     }
