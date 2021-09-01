@@ -47,16 +47,17 @@ internal class SkeletorMask(
 
     private fun mask(view: View, root: ViewGroup, paint: Paint, parentInverted: Boolean? = null) {
         val viewAttributes = attr.attributesSelector(view, attr)
+        val invert = (parentInverted ?: false) || viewAttributes.invert
         when (view) {
             is ViewGroup -> {
                 maskViewGroup(view, root, paint, viewAttributes)
-                view.children().forEach { v -> mask(v, root, paint, viewAttributes.invert) }
+                view.children().forEach { v -> mask(v, root, paint, invert) }
             }
             is TextView -> {
-                maskTextView(view, root, (parentInverted ?: false) || viewAttributes.invert)
+                maskTextView(view, root, invert)
             }
             else -> {
-                maskView(view, root, paint, viewAttributes, (parentInverted ?: false) || viewAttributes.invert)
+                maskView(view, root, paint, viewAttributes, invert)
             }
         }
     }
