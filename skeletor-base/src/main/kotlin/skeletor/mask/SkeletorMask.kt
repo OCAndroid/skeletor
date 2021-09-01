@@ -50,7 +50,7 @@ internal class SkeletorMask(
         val invert = (parentInverted ?: false) || viewAttributes.invert
         when (view) {
             is ViewGroup -> {
-                maskViewGroup(view, root, paint, viewAttributes)
+                maskViewGroup(view, root, paint, invert, viewAttributes)
                 view.children().forEach { v -> mask(v, root, paint, invert) }
             }
             is TextView -> {
@@ -62,14 +62,14 @@ internal class SkeletorMask(
         }
     }
 
-    private fun maskViewGroup(view: View, root: ViewGroup, paint: Paint, viewAttributes: Attributes) {
+    private fun maskViewGroup(view: View, root: ViewGroup, paint: Paint, invert: Boolean, viewAttributes: Attributes) {
         val rect = Rect().also {
             view.getDrawingRect(it)
             root.offsetDescendantRectToMyCoords(view, it)
         }
 
         val xfermode = paint.xfermode
-        if (!viewAttributes.invert) {
+        if (!(invert || viewAttributes.invert)) {
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         }
         canvas.drawRoundRect(RectF(rect), viewAttributes.cornerRadius, viewAttributes.cornerRadius, paint)
