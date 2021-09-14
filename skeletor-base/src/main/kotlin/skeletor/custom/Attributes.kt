@@ -53,6 +53,7 @@ data class RecyclerViewAttributes(
     @LayoutRes val itemLayout: Int,
     val itemCount: Int,
     override val invert: Boolean = false,
+    val layoutManager: RecyclerView.LayoutManager? = null,
     private val attributesForView: AttributeSelector? = null
 ) : Attributes() {
     override val attributesSelector: AttributeSelector

@@ -127,6 +127,7 @@ internal class MainSkeletonLoader(
                 itemLayout = itemLayoutResId,
                 itemCount = itemCount ?: defaults.itemCount,
                 invert = invert ?: defaults.invert,
+                layoutManager = layoutManager,
                 attributesForView = attributeSelector
             )
             target.view.generateRecyclerSkeletorView(attributes)

@@ -168,6 +168,7 @@ class RecyclerViewSkeleton internal constructor(
     override val shimmer: Shimmer?,
     override val lineSpacing: Float?,
     override val invert: Boolean?,
+    internal val layoutManager: RecyclerView.LayoutManager?,
     override val attributeSelector: AttributeSelector?
 ) : Skeleton() {
 
@@ -183,12 +184,14 @@ class RecyclerViewSkeleton internal constructor(
         @LayoutRes
         private var itemLayoutResId: Int
         private var itemCount: Int?
+        private var layoutManager: RecyclerView.LayoutManager?
 
         constructor(context: Context, @LayoutRes itemLayout: Int) : super(context) {
             target = null
             lifecycle = null
             itemLayoutResId = itemLayout
             itemCount = null
+            layoutManager = null
         }
 
         @JvmOverloads
@@ -200,6 +203,7 @@ class RecyclerViewSkeleton internal constructor(
             lifecycle = skeleton.lifecycle
             itemLayoutResId = skeleton.itemLayoutResId
             itemCount = skeleton.itemCount
+            layoutManager = skeleton.layoutManager
         }
 
         /**
@@ -233,6 +237,10 @@ class RecyclerViewSkeleton internal constructor(
             this.itemCount = itemCount
         }
 
+        fun layoutManager(customLayoutManager: RecyclerView.LayoutManager) = apply {
+            this.layoutManager = customLayoutManager
+        }
+
         fun lifecycle(lifecycle: Lifecycle?) = apply {
             this.lifecycle = lifecycle
         }
@@ -253,6 +261,7 @@ class RecyclerViewSkeleton internal constructor(
                 shimmer,
                 lineSpacing,
                 invert,
+                layoutManager,
                 attributeSelector
             )
         }
